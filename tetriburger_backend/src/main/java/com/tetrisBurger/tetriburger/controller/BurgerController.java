@@ -21,5 +21,17 @@ public class BurgerController {
         return usuarioRepositorio.save(usuario);
     }
 
+    @PostMapping("/login")
+    public String loginUsuario(@RequestBody Usuario usuario){
+        Usuario encontrado = usuarioRepositorio.findByCorreoAndClave(usuario.getCorreo(), usuario.getClave());
+        if (encontrado == null) {
+            return "NO";
+        }
+        else {
+            return "SI";
+        }
+    }
+
+
 
 }
