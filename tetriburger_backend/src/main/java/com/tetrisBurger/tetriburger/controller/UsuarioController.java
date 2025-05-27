@@ -1,7 +1,7 @@
 package com.tetrisBurger.tetriburger.controller;
 
 import com.tetrisBurger.tetriburger.entity.Usuario;
-import com.tetrisBurger.tetriburger.repository.UsuarioRepositorio;
+import com.tetrisBurger.tetriburger.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "http://localhost:5173")
 public class UsuarioController {
 
-    @Autowired UsuarioRepositorio usuarioRepositorio;
+    @Autowired
+    UsuarioRepository usuarioRepositorio;
 
     @GetMapping("/registro")
     public String inicio(){

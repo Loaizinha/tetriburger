@@ -14,5 +14,39 @@ public class Menu {
     private String nombre;
 
     @OneToMany(mappedBy = "menu")
-    public List<Producto> productos = new ArrayList<>();
+    private List<Producto> productos = new ArrayList<>();
+
+    public Menu(){
+
+    }
+
+    public Menu(int idMenu, String nombre, List<Producto> productos) {
+        this.idMenu = idMenu;
+        this.nombre = nombre;
+        this.productos = productos;
+    }
+
+    public int getIdMenu() {
+        return idMenu;
+    }
+
+    public void setIdMenu(int idMenu) {
+        this.idMenu = idMenu;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public List<Producto> getProductos() {
+        return productos;
+    }
+
+    public void setProductos(List<Producto> productos) {
+        this.productos = productos;
+    }
 }

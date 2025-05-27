@@ -1,39 +1,21 @@
-package com.tetrisBurger.tetriburger.entity;
+package com.tetrisBurger.tetriburger.dto;
 
-import jakarta.persistence.*;
-
-@Entity
-public class Producto {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idProducto;
+public class ProductoRequest {
 
     private String nombre;
     private String descripcion;
     private double precio;
+    private int menu;
 
-    @ManyToOne
-    @JoinColumn(name = "id_menu")
-    private Menu menu;
-
-    public Producto(){
+    public ProductoRequest(){
 
     }
 
-    public Producto(int idProducto, String nombre, String descripcion, double precio, Menu menu) {
-        this.idProducto = idProducto;
+    public ProductoRequest(String nombre, String descripcion, double precio, int menu) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
         this.menu = menu;
-    }
-
-    public int getIdProducto() {
-        return idProducto;
-    }
-
-    public void setIdProducto(int idProducto) {
-        this.idProducto = idProducto;
     }
 
     public String getNombre() {
@@ -60,11 +42,11 @@ public class Producto {
         this.precio = precio;
     }
 
-    public Menu getMenu() {
+    public int getMenu() {
         return menu;
     }
 
-    public void setMenu(Menu menu) {
+    public void setMenu(int menu) {
         this.menu = menu;
     }
 }
