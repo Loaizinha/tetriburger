@@ -38,5 +38,11 @@ public class ProductoController {
         producto.setMenu(menu);
         return productoService.agregarProducto(producto);
     }
+
+    @DeleteMapping("/{id}")
+    public void eliminarProducto(@PathVariable int id){
+        Producto producto = productoService.buscarProductoPorId(id);
+        productoService.eliminarProducto(producto);
+    }
 }
 

@@ -3,12 +3,12 @@ import React, { useEffect, useState } from 'react'
 
 export default function ListarProductos() {
 
-    const urlBase = "http://localhost:8080/producto/productos";
+    const urlBase = "http://localhost:8080/producto";
 
     const [productos, setProductos] = useState([]);
 
     const cargarProductos = async()=>{
-        const res = await axios.get(urlBase);
+        const res = await axios.get(`${urlBase}/productos`);
         setProductos(res.data);
     }
 
@@ -16,7 +16,14 @@ export default function ListarProductos() {
         cargarProductos();
     },[])
 
+    const eliminarProducto = async(id)=>{
+        const res = await axios.delete(`${urlBase}/${id}`);
+        cargarProductos();
+    }
+
     return (
+        <>
+        <a href="/agregar">Agregar Producto</a>
         <div className='container'>
             <table className="table">
                 <thead>
@@ -35,6 +42,9 @@ export default function ListarProductos() {
                                 <td>{producto.nombre}</td>
                                 <td>{producto.descripcion}</td>
                                 <td>{producto.precio}</td>
+                                <td>
+                                    <button onClick={()=>eliminarProducto(producto.idProducto)} className='container btn btn-sm btn-danger'>Eliminar</button>
+                                </td>
                             </tr>
                         ))
 
@@ -42,5 +52,7 @@ export default function ListarProductos() {
                 </tbody>
             </table>
         </div>
+        </>
+        
     )
 }

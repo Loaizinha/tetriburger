@@ -1,0 +1,53 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  padding: 20px;
+}
+
+.contenedor-menu {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.producto-card {
+  width: 250px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  background-color: #fff;
+  transition: transform 0.3s ease;
+}
+
+.producto-card:hover {
+  transform: scale(1.03);
+}
+
+.producto-card img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.producto-info {
+  padding: 16px;
+}
+
+.producto-info h3 {
+  margin: 0 0 8px;
+  font-size: 1.2em;
+  color: #333;
+}
+
+.producto-info p {
+  margin: 0 0 12px;
+  font-size: 0.95em;
+  color: #666;
+}
+
+.precio {
+  font-weight: bold;
+  font-size: 1.1em;
+  color: #e67e22;
+}
