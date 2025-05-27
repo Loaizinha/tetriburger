@@ -24,7 +24,8 @@ public class ProductoController {
 
     @GetMapping("/productos")
     public List<Producto> mostrarProductos() {
-        return productoService.mostrarProductos();
+        List<Producto> productos = productoService.mostrarProductos();
+        return productos;
     }
 
     @PostMapping("/agregar")
@@ -38,3 +39,4 @@ public class ProductoController {
         return productoService.agregarProducto(producto);
     }
 }
+
