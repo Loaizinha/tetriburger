@@ -1,0 +1,38 @@
+.home-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+  text-align: center;
+  padding: 2rem;
+}
+
+.home-content {
+  background: white;
+  padding: 3rem;
+  border-radius: 2rem;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+.brand {
+  color: #e63946;
+  font-weight: bold;
+}
+
+.btn-ver-menu {
+  display: inline-block;
+  margin-top: 2rem;
+  padding: 0.8rem 1.5rem;
+  background-color: #e63946;
+  color: white;
+  border: none;
+  border-radius: 2rem;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.btn-ver-menu:hover {
+  background-color: #d62828;
+}

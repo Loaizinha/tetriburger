@@ -8,13 +8,13 @@ import Navegador from './componentes/Navegador';
 import ListarProductos from './componentes/productos/ListarProductos';
 import AgregarProducto from './componentes/productos/AgregarProducto';
 import ListarMenu from './componentes/menu/ListarMenu';
+import Home from './componentes/home/Home';
 
 export default function App() {
   return (
     <Router>
-      <Menu />
       <Routes>
-        <Route path="/" element={<Navegador />} />
+        <Route path="/" element={<Home />} />
         <Route path="/registro" element={<Registro />} />
         <Route path="/login" element={<Login />} />
         <Route path='/producto' element={<ListarProductos />}></Route>
