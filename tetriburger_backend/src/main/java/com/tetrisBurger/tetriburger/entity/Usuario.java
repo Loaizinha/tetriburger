@@ -1,19 +1,12 @@
-package com.tetrisBurger.tetriburger.model;
+package com.tetrisBurger.tetriburger.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+
 
 @Entity
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@ToString
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,6 +14,33 @@ public class Usuario {
     private String nombre;
     private String correo;
     private String clave;
+
+    public Usuario(){
+
+    }
+
+    public Usuario(int idUsuario, String nombre, String correo, String clave) {
+        this.idUsuario = idUsuario;
+        this.nombre = nombre;
+        this.correo = correo;
+        this.clave = clave;
+    }
+
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
     public String getCorreo() {
         return correo;
