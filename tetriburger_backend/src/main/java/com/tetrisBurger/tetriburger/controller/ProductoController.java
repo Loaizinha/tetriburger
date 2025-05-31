@@ -20,7 +20,7 @@ public class ProductoController {
     private ProductoService productoService;
 
     @Autowired
-    private MenuService menuService; // ✅ Corregido
+    private MenuService menuService;
 
     @GetMapping("/productos")
     public List<Producto> mostrarProductos() {
@@ -30,7 +30,8 @@ public class ProductoController {
 
     @PostMapping("/agregar")
     public Producto agregarProducto(@RequestBody ProductoRequest productoObtenido) {
-        Menu menu = menuService.buscarMenuPorId(productoObtenido.getMenu());
+
+        Menu menu = menuService.buscarMenuPorId(1);
         Producto producto = new Producto();
         producto.setNombre(productoObtenido.getNombre());
         producto.setDescripcion(productoObtenido.getDescripcion());
@@ -44,5 +45,41 @@ public class ProductoController {
         Producto producto = productoService.buscarProductoPorId(id);
         productoService.eliminarProducto(producto);
     }
+
+    @GetMapping("/editar/{id}")
+    public Producto obtenerProducto(@PathVariable int id){
+        return productoService.buscarProductoPorId(id);
+    }
+
+    @PutMapping("/editar/{id}")
+    public void actualizarProducto(@PathVariable int id, @RequestBody ProductoRequest productoObtenido){
+        Producto producto = productoService.buscarProductoPorId(id);
+        producto.setNombre(productoObtenido.getNombre());
+        producto.setDescripcion(productoObtenido.getDescripcion());
+        producto.setPrecio(productoObtenido.getPrecio());
+        productoService.agregarProducto(producto);
+    }
+
+    @PutMapping("/{id}")
+    public void agregarProductoAlMenu(@PathVariable int id){
+        Producto producto = productoService.buscarProductoPorId(id);
+        Menu menu = menuService.buscarMenuPorId(1);
+        producto.setMenu(menu);
+        productoService.agregarProducto(producto);
+    }
+
+    @PutMapping("menu/{id}")
+    public void quitarProductoDelMenu(@PathVariable int id){
+        Producto producto = productoService.buscarProductoPorId(id);
+        Menu menu = null;
+        producto.setMenu(menu);
+        productoService.agregarProducto(producto);
+    }
+
+
+
+
+
+
 }
 

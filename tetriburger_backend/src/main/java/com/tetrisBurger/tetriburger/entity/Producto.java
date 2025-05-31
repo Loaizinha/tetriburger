@@ -1,6 +1,8 @@
 package com.tetrisBurger.tetriburger.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 @Entity
@@ -15,7 +17,7 @@ public class Producto {
 
     @ManyToOne
     @JoinColumn(name = "id_menu")
-    @JsonIgnore
+    @JsonIgnoreProperties("productos")
     private Menu menu;
 
     public Producto(){

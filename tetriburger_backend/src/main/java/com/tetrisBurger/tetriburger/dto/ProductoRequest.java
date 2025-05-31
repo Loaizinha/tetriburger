@@ -5,17 +5,15 @@ public class ProductoRequest {
     private String nombre;
     private String descripcion;
     private double precio;
-    private int menu;
 
     public ProductoRequest(){
 
     }
 
-    public ProductoRequest(String nombre, String descripcion, double precio, int menu) {
+    public ProductoRequest(String nombre, String descripcion, double precio) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
-        this.menu = menu;
     }
 
     public String getNombre() {
@@ -42,11 +40,5 @@ public class ProductoRequest {
         this.precio = precio;
     }
 
-    public int getMenu() {
-        return menu;
-    }
 
-    public void setMenu(int menu) {
-        this.menu = menu;
-    }
 }

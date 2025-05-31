@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom';
 
 export default function ListarProductos() {
 
@@ -18,8 +19,23 @@ export default function ListarProductos() {
 
     const eliminarProducto = async(id)=>{
         const res = await axios.delete(`${urlBase}/${id}`);
+        alert("producto eliminado con exito");
         cargarProductos();
     }
+
+    const AgregarProductoAlMenu = async(id)=>{
+        const res = await axios.put(`${urlBase}/${id}`);
+        alert("producto añadido al menu");
+        cargarProductos();
+    }
+
+    const quitarProductoDelMenu = async(id)=>{
+        const res = await axios.put(`${urlBase}/menu/${id}`);
+        alert("producto eliminado del menu");
+        cargarProductos();
+    }
+
+    
 
     return (
         <>
@@ -43,7 +59,13 @@ export default function ListarProductos() {
                                 <td>{producto.descripcion}</td>
                                 <td>{producto.precio}</td>
                                 <td>
-                                    <button onClick={()=>eliminarProducto(producto.idProducto)} className='container btn btn-sm btn-danger'>Eliminar</button>
+                                    <button onClick={()=>eliminarProducto(producto.idProducto)} className='btn btn-sm btn-danger me-2'>Eliminar</button>
+                                    <Link className='btn btn-sm btn-warning me-2' to={`editar/${producto.idProducto}`}>Editar</Link>
+                                    {
+                                         producto.menu?.idMenu === 1 ? <button className="btn btn-sm btn-secondary" onClick={()=>quitarProductoDelMenu(producto.idProducto)}>Quitar del menu</button> : <button className="btn btn-success btn-sm" onClick={()=>AgregarProductoAlMenu(producto.idProducto)}>Añadir al menu</button> 
+
+                                    }   
+                                    
                                 </td>
                             </tr>
                         ))

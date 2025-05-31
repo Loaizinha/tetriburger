@@ -19,5 +19,10 @@ public class MenuService {
         return menu;
     }
 
+    public List<Producto> mostrarProductosMenu(Menu menu){
+
+        return menu.getProductos();
+    }
+
 
 }

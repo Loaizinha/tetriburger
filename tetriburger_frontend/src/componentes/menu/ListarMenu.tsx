@@ -22,7 +22,7 @@ export default function ListarMenu() {
             {
                 productos.map((producto, index) => (
                     <div className="producto-card" key={index}>
-                        <img src="https://via.placeholder.com/200x150" alt={producto.nombre} />
+                        <img src="/img/cangreBurger.jpeg" alt={producto.nombre} />
                         <div className="producto-info">
                             <h3>{producto.nombre}</h3>
                             <p>{producto.descripcion}</p>

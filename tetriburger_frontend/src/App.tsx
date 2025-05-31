@@ -9,6 +9,7 @@ import ListarProductos from './componentes/productos/ListarProductos';
 import AgregarProducto from './componentes/productos/AgregarProducto';
 import ListarMenu from './componentes/menu/ListarMenu';
 import Home from './componentes/home/Home';
+import EditarProducto from './componentes/productos/EditarProducto';
 
 export default function App() {
   return (
@@ -19,6 +20,7 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path='/producto' element={<ListarProductos />}></Route>
         <Route path='/agregar' element={<AgregarProducto />}></Route>
+        <Route path='/producto/editar/:id' element={<EditarProducto />}></Route>
         <Route path='/menu' element={<ListarMenu />} />
       </Routes>
     </Router>

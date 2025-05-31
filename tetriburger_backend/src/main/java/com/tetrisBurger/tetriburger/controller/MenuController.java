@@ -1,5 +1,6 @@
 package com.tetrisBurger.tetriburger.controller;
 
+import com.tetrisBurger.tetriburger.entity.Menu;
 import com.tetrisBurger.tetriburger.entity.Producto;
 import com.tetrisBurger.tetriburger.repository.MenuRepository;
 import com.tetrisBurger.tetriburger.service.MenuService;
@@ -23,7 +24,7 @@ public class MenuController {
 
     @GetMapping("/menu")
     public List<Producto> mostrarMenu(){
-        List<Producto> productos = productoService.mostrarProductos();
-        return productos;
+        Menu menu = menuService.buscarMenuPorId(1);
+        return menuService.mostrarProductosMenu(menu);
     }
 }

@@ -12,10 +12,9 @@ export default function AgregarProducto() {
         nombre:"",
         descripcion:"",
         precio:"",
-        menu:""
     })
                                     
-    const {nombre, descripcion, precio, menu} = producto;
+    const {nombre, descripcion, precio} = producto;
 
     const onInputChange = (e:React.ChangeEvent<HTMLInputElement>)=>{
         setProduto({...producto, [e.target.name]: e.target.value})
@@ -39,9 +38,6 @@ export default function AgregarProducto() {
             <br />
             <label htmlFor="">Precio</label>
             <input id='precio' name='precio' type="text" onChange={onInputChange} value={precio}/>
-            <br />
-            <label htmlFor="">Menu</label>
-            <input id='menu' name='menu' type="text" onChange={onInputChange} value={menu}/>
             <br />
             <button type='submit'>Enviar</button>
 
