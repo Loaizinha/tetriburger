@@ -23,7 +23,6 @@ public class CarritoItem {
     @JsonBackReference
     private Carrito carrito;
 
-
     @ManyToOne
     @JoinColumn(name = "id_producto")
     private Producto producto;
@@ -31,17 +30,11 @@ public class CarritoItem {
     private int cantidad;
     private double total;
 
-
     public void calcularTotal() {
         if (producto != null && producto.getPrecio() > 0) {
             this.total = this.cantidad * producto.getPrecio();
         } else {
             this.total = 0;
         }
-    }
-
-
-    public int getIdCarritoItem() {
-        return 0;
     }
 }

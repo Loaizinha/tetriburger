@@ -17,13 +17,14 @@ public class CarritoItemController {
     @Autowired
     private CarritoItemService carritoItemService;
 
+    // Agregar un ítem al carrito
     @PostMapping("/item")
-    public CarritoItem agregarItem(@RequestBody CarritoItem item)
-    {
+    public CarritoItem agregarItem(@RequestBody CarritoItem item) {
         item.calcularTotal();
         return carritoItemService.guardarItem(item);
     }
 
+    // Actualizar un ítem del carrito
     @PutMapping("/item/{idCarritoItem}")
     public ResponseEntity<?> actualizarCarritoItem(@PathVariable int idCarritoItem, @RequestBody CarritoItem itemActualizado) {
         CarritoItem actualizado = carritoItemService.actualizarItem(idCarritoItem, itemActualizado);
@@ -34,19 +35,20 @@ public class CarritoItemController {
         }
     }
 
-
-
-    @DeleteMapping("/{idCarritoItem}")
+    // Eliminar un ítem del carrito
+    @DeleteMapping("/item/{idCarritoItem}")
     public void eliminarItem(@PathVariable Integer idCarritoItem) {
         carritoItemService.eliminarItem(idCarritoItem);
     }
 
+    // Obtener todos los ítems de un carrito
     @GetMapping("/carrito/{idCarrito}")
     public List<CarritoItem> obtenerItemsDeCarrito(@PathVariable("idCarrito") Integer idCarrito) {
         return carritoItemService.obtenerItemsPorCarritoId(idCarrito);
     }
 
-    @DeleteMapping("/carrito/{idCarrito}")
+    // Vaciar todos los ítems de un carrito
+    @DeleteMapping("/carrito/{idCarrito}/vaciar")
     public void vaciarCarrito(@PathVariable("idCarrito") int idCarrito) {
         List<CarritoItem> items = carritoItemService.obtenerItemsPorCarritoId(idCarrito);
         for (CarritoItem item : items) {
@@ -54,4 +56,3 @@ public class CarritoItemController {
         }
     }
 }
-

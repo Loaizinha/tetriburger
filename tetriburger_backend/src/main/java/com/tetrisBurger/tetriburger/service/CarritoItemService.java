@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CarritoItemService {
@@ -25,16 +26,7 @@ public class CarritoItemService {
         return carritoItemRepository.findById(id).orElse(null);
     }
 
-    public CarritoItem actualizarItem(Integer idCarritoItem, CarritoItem itemActualizado) {
-        CarritoItem itemExistente = carritoItemRepository.findById(idCarritoItem).orElse(null);
-        if (itemExistente != null) {
-            itemExistente.setCantidad(itemActualizado.getCantidad());
-            itemExistente.calcularTotal();
-            return carritoItemRepository.save(itemExistente);
-        } else {
-            return null;
-        }
-    }
+
 
     public void eliminarItem(Integer idCarritoItem) {
         carritoItemRepository.deleteById(idCarritoItem);
