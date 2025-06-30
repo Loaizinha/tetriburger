@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from "react";
+import { FaShoppingCart, FaHome, FaUserPlus, FaSignInAlt, FaHamburger, FaList, FaBars, FaTimes } from "react-icons/fa";
+import { useCarrito } from "./context/Carrito";
 import { Link, useLocation } from "react-router-dom";
 import { gsap } from "gsap";
 import styled from "styled-components";
@@ -16,7 +18,6 @@ import {
   type ShadowProps,
   type PositionProps,
 } from "styled-system";
-import { FaHome, FaUserPlus, FaSignInAlt, FaHamburger, FaList, FaBars, FaTimes } from "react-icons/fa";
 
 const Nav = styled.nav<
   SpaceProps &
@@ -32,7 +33,7 @@ const Nav = styled.nav<
   ${flexbox}
   ${shadow}
   ${position}
-  background: #000; /* Fondo negro */
+  background: #000;
   padding: 15px;
   display: flex;
   justify-content: center;
@@ -41,7 +42,7 @@ const Nav = styled.nav<
   top: 0;
   width: 100%;
   z-index: 1000;
-  color: #fff; /* Letras blancas */
+  color: #fff;
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   margin-bottom: 20px;
 `;
@@ -57,6 +58,7 @@ const NavLink = styled(Link)`
   gap: 10px;
   border-radius: 6px;
   padding: 8px 14px;
+  position: relative;
   &:hover {
     background: #4B1F1F;
     color: #fff;
@@ -69,8 +71,8 @@ const SidebarContainer = styled.aside<{ open: boolean }>`
   top: 0;
   width: 220px;
   height: 100vh;
-  background: #000; /* Fondo negro */
-  color: #fff; /* Letras blancas */
+  background: #000;
+  color: #fff;
   display: flex;
   flex-direction: column;
   border-right: 1px solid #232323;
@@ -91,7 +93,7 @@ const SidebarHeader = styled.div`
   color: #fff;
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Para separar logo y X */
+  justify-content: space-between;
 `;
 
 const NavList = styled.ul`
@@ -116,6 +118,7 @@ const NavItem = styled.li<{ active?: boolean }>`
     border-left: 4px solid ${({ active }) => (active ? "#4B1F1F" : "transparent")};
     transition: background 0.2s, color 0.2s, border-color 0.2s;
     border-radius: 6px 0 0 6px;
+    position: relative;
     &:hover {
       background: #4B1F1F;
       color: #fff;
@@ -146,7 +149,7 @@ const MenuButton = styled.button`
   top: 18px;
   left: 18px;
   z-index: 1300;
-  background: #e63946; /* Rojo bonito */
+  background: #e63946;
   color: #fff;
   border: none;
   border-radius: 50%;
@@ -187,6 +190,9 @@ const rutas = [
 export default function Navegador() {
   const navRef = useRef<HTMLElement | null>(null);
   const linksRef = useRef<Array<HTMLAnchorElement | null>>([]);
+  const carritoRef = useRef<HTMLAnchorElement | null>(null);
+  const { items } = useCarrito();
+  const [showToast, setShowToast] = useState(false);
 
   // Limpiar refs en cada render
   linksRef.current = [];
@@ -235,28 +241,80 @@ export default function Navegador() {
     }
   };
 
+  // Toast auto-hide
+  useEffect(() => {
+    if (showToast) {
+      const timer = setTimeout(() => setShowToast(false), 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [showToast]);
+
   return (
-    <Nav ref={navRef}>
-      {rutas.map((ruta, index) => (
-        <NavLink
-          key={index}
-          to={ruta.path}
-          ref={(el) => {
-            linksRef.current[index] = el;
-          }}
-          onMouseEnter={() => handleHover(index)}
-          onMouseLeave={() => handleOut(index)}
-        >
-          {ruta.icon}
-          {ruta.texto}
+    <>
+      <Nav ref={navRef}>
+        {rutas.map((ruta, index) => (
+          <NavLink
+            key={index}
+            to={ruta.path}
+            ref={(el) => {
+              linksRef.current[index] = el;
+            }}
+            onMouseEnter={() => handleHover(index)}
+            onMouseLeave={() => handleOut(index)}
+          >
+            {ruta.icon}
+            {ruta.texto}
+          </NavLink>
+        ))}
+        {/* Carrito en el menú superior */}
+        <NavLink to="/carrito" ref={carritoRef} style={{ position: "relative" }}>
+          <FaShoppingCart />
+          {items.length > 0 && (
+            <span
+              style={{
+                position: "absolute",
+                top: "-6px",
+                right: "-8px",
+                background: "#e63946",
+                color: "#fff",
+                fontSize: "12px",
+                fontWeight: "bold",
+                padding: "2px 6px",
+                borderRadius: "50%",
+              }}
+            >
+              {items.length}
+            </span>
+          )}
         </NavLink>
-      ))}
-    </Nav>
+      </Nav>
+      {/* Toast de producto agregado */}
+      {showToast && (
+        <div
+          id="toast-carrito"
+          style={{
+            position: "fixed",
+            top: 80,
+            right: 30,
+            background: "#4b1f1f",
+            color: "white",
+            padding: "12px 20px",
+            borderRadius: 8,
+            fontWeight: 500,
+            boxShadow: "0 4px 8px rgba(0,0,0,0.3)",
+            zIndex: 1500,
+          }}
+        >
+          Producto agregado al carrito
+        </div>
+      )}
+    </>
   );
 }
 
 export function Sidebar() {
   const location = useLocation();
+  const { items } = useCarrito();
   const [open, setOpen] = useState(false);
 
   const handleNavClick = () => setOpen(false);
@@ -285,6 +343,28 @@ export function Sidebar() {
               </Link>
             </NavItem>
           ))}
+          {/* Carrito en el sidebar */}
+          <NavItem active={location.pathname === "/carrito"}>
+            <Link to="/carrito" onClick={handleNavClick} style={{ display: "flex", alignItems: "center", position: "relative" }}>
+              <FaShoppingCart />
+              Carrito
+              {items.length > 0 && (
+                <span
+                  style={{
+                    marginLeft: "auto",
+                    background: "#e63946",
+                    borderRadius: "50%",
+                    color: "#fff",
+                    fontSize: "0.75rem",
+                    fontWeight: "bold",
+                    padding: "2px 6px",
+                  }}
+                >
+                  {items.length}
+                </span>
+              )}
+            </Link>
+          </NavItem>
         </NavList>
         <SidebarFooter>
           <div>© 2025 TetrisBurger</div>
