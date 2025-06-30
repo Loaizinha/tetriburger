@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import Navegador from './Navegador';
+// import { Sidebar } from './componentes/Navegador'; // Sidebar import removed due to missing module
 import { useNavigate } from 'react-router-dom';
 
 export default function Registro() {
@@ -31,7 +31,7 @@ export default function Registro() {
 
   return (
     <>
-      <Navegador />
+      {/* <Sidebar /> */}
       <div className="container text-center p-5">
         <h3 className="mb-4">REGISTRARSE</h3>
         <form onSubmit={onSubmit}>

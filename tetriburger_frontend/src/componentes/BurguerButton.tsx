@@ -1,12 +1,17 @@
 import React from "react";
 import styled from "styled-components";
 
-function BurguerButton(props) {
+interface BurguerButtonProps {
+  handleClick: () => void;
+  clicked: boolean;
+}
+
+const BurguerButton: React.FC<BurguerButtonProps> = ({ handleClick, clicked }) => {
   return (
     <Burguer>
       <div
-        onClick={props.handleClick}
-        className={`icon nav-icon-5 ${props.clicked ? 'open' : ''}`}
+        onClick={handleClick}
+        className={`icon nav-icon-5${clicked ? " open" : ""}`}
       >
         <span></span>
         <span></span>
@@ -14,7 +19,7 @@ function BurguerButton(props) {
       </div>
     </Burguer>
   );
-}
+};
 
 export default BurguerButton;
 
@@ -26,7 +31,7 @@ const Burguer = styled.div`
     position: relative;
     cursor: pointer;
     display: inline-block;
-    z-index:100;
+    z-index: 100;
   }
 
   .nav-icon-5 span {

@@ -36,7 +36,7 @@ export default function EditarProducto() {
     const onSubmit = async(e:React.FormEvent<HTMLFormElement>) =>{
         e.preventDefault();
 
-        const res = await axios.put(`${urlBase}/${id}`, producto)
+        await axios.put(`${urlBase}/${id}`, producto)
         alert("producto actualizado correctamente");
         navegador("/producto")
     }

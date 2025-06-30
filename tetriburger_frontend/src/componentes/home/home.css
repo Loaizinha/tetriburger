@@ -36,3 +36,17 @@
 .btn-ver-menu:hover {
   background-color: #d62828;
 }
+
+.tetris-burger {
+  margin: 40px auto 20px auto;
+  width: 200px;
+  min-height: 220px;
+  position: relative;
+  z-index: 1;
+}
+
+.ingrediente {
+  box-sizing: border-box;
+  border: 2px solid #fff3;
+  opacity: 0;
+}
