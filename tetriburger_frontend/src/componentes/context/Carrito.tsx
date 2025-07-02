@@ -1,73 +1,68 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, ReactNode } from "react";
 
-export const CarritoContext = createContext({
+type Producto = {
+  id: number;
+  precio: number;
+  // agrega otros campos si es necesario
+};
+
+type CarritoItem = {
+  idCarritoItem: number;
+  producto: Producto;
+  cantidad: number;
+  total: number;
+};
+
+type CarritoContextType = {
+  items: CarritoItem[];
+  addItem: (item: CarritoItem) => void;
+  removeItem: (idCarritoItem: number) => void;
+  updateCantidad: (idCarritoItem: number, cantidad: number) => void;
+};
+
+export const CarritoContext = createContext<CarritoContextType>({
   items: [],
-  setItems: (items: any[]) => {},
-  addItem: (item: any) => {},
-  removeItem: (idCarritoItem: number) => {},
-  updateCantidad: (idCarritoItem: number, cantidad: number) => {},
+  addItem: () => {},
+  removeItem: () => {},
+  updateCantidad: () => {},
 });
 
-export function CarritoProvider({ children }: { children: React.ReactNode }) {
-  const [items, setItems] = useState<any[]>([]);
+export function CarritoProvider({ children }: { children: ReactNode }) {
+  const [items, setItems] = useState<CarritoItem[]>([]);
 
-  const addItem = (item: any) => {
-    setItems((prev) => [...prev, item]);
+  const addItem = (item) => {
+    // Si el producto ya está en el carrito, suma la cantidad
+    const existe = items.find((i) => i.producto.id === item.producto.id);
+    if (existe) {
+      setItems(
+        items.map((i) =>
+          i.producto.id === item.producto.id
+            ? { ...i, cantidad: i.cantidad + 1, total: (i.cantidad + 1) * i.producto.precio }
+            : i
+        )
+      );
+    } else {
+      setItems([...items, item]);
+    }
   };
 
-  const removeItem = (idCarritoItem: number) => {
-    setItems((prev) => prev.filter((i) => i.idCarritoItem !== idCarritoItem));
+  const removeItem = (idCarritoItem) => {
+    setItems(items.filter((i) => i.idCarritoItem !== idCarritoItem));
   };
 
-  const updateCantidad = (idCarritoItem: number, cantidad: number) => {
-    setItems((prev) =>
-      prev.map((i) =>
+  const updateCantidad = (idCarritoItem, cantidad) => {
+    setItems(
+      items.map((i) =>
         i.idCarritoItem === idCarritoItem ? { ...i, cantidad, total: cantidad * i.producto.precio } : i
       )
     );
   };
 
   return (
-    <CarritoContext.Provider value={{ items, setItems, addItem, removeItem, updateCantidad }}>
+    <CarritoContext.Provider value={{ items, addItem, removeItem, updateCantidad }}>
       {children}
     </CarritoContext.Provider>
   );
 }
 
 export const useCarrito = () => useContext(CarritoContext);
-
-import { useCarrito } from "../context/Carrito";
-
-export default function ProductoCard({ producto }) {
-  const { addItem } = useCarrito();
-
-  const handleAgregar = () => {
-    addItem({
-      idCarritoItem: Date.now(),
-      producto,
-      cantidad: 1,
-      total: producto.precio,
-    });
-  };
-
-  return (
-    <div style={{ border: "1px solid #eee", borderRadius: 8, padding: 16, margin: 8 }}>
-      <h4>{producto.nombre}</h4>
-      <p>${producto.precio}</p>
-      <button
-        onClick={handleAgregar}
-        style={{
-          background: "#e63946",
-          color: "#fff",
-          border: "none",
-          borderRadius: 6,
-          padding: "8px 16px",
-          cursor: "pointer",
-          fontWeight: "bold",
-        }}
-      >
-        Añadir al carrito
-      </button>
-    </div>
-  );
-}
